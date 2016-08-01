@@ -1,3 +1,3 @@
 # Os boost C++
 
-This is class demostrates system functions in boost libary in C++
+This is class which demonstrates system functions in boost library in C++
