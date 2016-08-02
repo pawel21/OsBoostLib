@@ -1,4 +1,4 @@
-target: os.cc
+target: run
 	./run
-os.c: os.c
+run: os.cc
 	g++ -std=c++11 -Os -Wall -pedantic os.cc -lboost_system -lboost_filesystem -o run
