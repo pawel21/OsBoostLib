@@ -12,6 +12,7 @@ public:
   void pcwd();
   std::string getcwd();
   void print_list_current_directory();
+  void listdir(path p);
 };
 
 void OperatingSystem::pcwd()
@@ -40,11 +41,20 @@ void OperatingSystem::print_list_current_directory()
   }
 }
 
+void OperatingSystem::listdir(path p)
+{
+  for (auto i = directory_iterator(p); i != directory_iterator(); i++)
+  {
+          std::cout << i->path().filename().string() << std::endl;
+  }
+}
+
 int main()
 {
   OperatingSystem os = OperatingSystem ();
   os.pcwd();
   std::cout<<os.getcwd()<<"\n";
   os.print_list_current_directory();
+  os.listdir("/home/pawel1/Pulpit/C++/boost");
   return 0;
 }
