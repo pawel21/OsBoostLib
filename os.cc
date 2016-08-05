@@ -3,7 +3,7 @@
 #include <boost/filesystem.hpp>
 #include <vector>
 #include <string>
-
+#include <map>
 
 using namespace boost::filesystem;
 class OperatingSystem
@@ -13,6 +13,7 @@ public:
   std::string getcwd();
   void print_list_current_directory();
   void listdir(path p);
+  void map_ls();
 };
 
 void OperatingSystem::pcwd()
@@ -49,6 +50,38 @@ void OperatingSystem::listdir(path p)
   }
 }
 
+void OperatingSystem::map_ls()
+{
+    std::map<std::string, std::vector<std::string> > ls;
+    std::vector<std::string> directory;
+    std::vector<std::string> files;
+
+    path cwd = current_path();
+
+    for(auto i = directory_iterator(cwd); i != directory_iterator(); i++)
+    {
+      if (is_directory(i->path()))
+      {
+        directory.push_back(i->path().filename().string());
+      }
+      else
+          files.push_back(i->path().filename().string());
+    }
+    ls["directory: "] = directory;
+    ls["files: "] = files;
+
+    std::map<std::string, std::vector<std::string> >::iterator it;
+    for(it=ls.begin(); it != ls.end(); ++it)
+    {
+      std::cout<< it->first << " => ";
+
+      for (std::vector<std::string>::iterator eptr=it->second.begin(); eptr!=it->second.end(); eptr++)
+        std::cout<< *eptr << " ";
+      std::cout<<"\n";
+    }
+
+}
+
 int main()
 {
   OperatingSystem os = OperatingSystem ();
@@ -56,5 +89,6 @@ int main()
   std::cout<<os.getcwd()<<"\n";
   os.print_list_current_directory();
   os.listdir("/home/pawel1/Pulpit/C++/boost");
+  os.map_ls();
   return 0;
 }
