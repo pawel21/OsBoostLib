@@ -1,11 +1,14 @@
 #include <string>
 #include <iostream>
 #include <boost/filesystem.hpp>
+#include <boost/date_time.hpp>
 #include <vector>
 #include <string>
 #include <map>
 
 using namespace boost::filesystem;
+namespace greg = boost::gregorian;
+
 class OperatingSystem
 {
 public:
@@ -14,6 +17,7 @@ public:
   void print_list_current_directory();
   void listdir(path p);
   void map_ls();
+  void current_time();
 };
 
 void OperatingSystem::pcwd()
@@ -79,9 +83,14 @@ void OperatingSystem::map_ls()
         std::cout<< *eptr << " ";
       std::cout<<"\n";
     }
-
 }
 
+void OperatingSystem::current_time()
+{
+  greg::date today = greg::day_clock::local_day();
+  std::cout<< today.day_of_week()<< " " << today.day() << " , " << today.month()
+  << " , " << today.year() << "\n";
+}
 int main()
 {
   OperatingSystem os = OperatingSystem ();
@@ -90,5 +99,6 @@ int main()
   os.print_list_current_directory();
   os.listdir("/home/pawel1/Pulpit/C++/boost");
   os.map_ls();
+  os.current_time();
   return 0;
 }
