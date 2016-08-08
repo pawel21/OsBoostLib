@@ -2,13 +2,18 @@
 #include <iostream>
 #include <boost/filesystem.hpp>
 #include <boost/date_time.hpp>
+#include <boost/chrono.hpp>
+#include <unistd.h>
+#include <fcntl.h>
+#include <chrono>
+#include <time.h>
 #include <vector>
 #include <string>
 #include <map>
 
 using namespace boost::filesystem;
 namespace greg = boost::gregorian;
-
+namespace chrono = boost::chrono;
 class OperatingSystem
 {
 public:
@@ -18,6 +23,8 @@ public:
   void listdir(path p);
   void map_ls();
   void current_time();
+  long unix_time();
+  void size_of_file(const char* path);
 };
 
 void OperatingSystem::pcwd()
@@ -85,11 +92,22 @@ void OperatingSystem::map_ls()
     }
 }
 
+void OperatingSystem::size_of_file(const char* path)
+{
+  std::cout<<"file size= " << file_size(path) << "\n";
+}
 void OperatingSystem::current_time()
 {
   greg::date today = greg::day_clock::local_day();
   std::cout<< today.day_of_week()<< " " << today.day() << " , " << today.month()
   << " , " << today.year() << "\n";
+}
+
+long OperatingSystem::unix_time()
+{
+  time_t now = time(NULL);
+  long t = now;
+  return t;
 }
 int main()
 {
@@ -100,5 +118,7 @@ int main()
   os.listdir("/home/pawel1/Pulpit/C++/boost");
   os.map_ls();
   os.current_time();
+  std::cout<<"unix time= "<<os.unix_time()<<"\n";
+  os.size_of_file("os.cc");
   return 0;
 }
