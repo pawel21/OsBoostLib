@@ -3,6 +3,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/date_time.hpp>
 #include <boost/chrono.hpp>
+#include <cstdlib>
 #include <unistd.h>
 #include <fcntl.h>
 #include <chrono>
@@ -25,6 +26,7 @@ public:
   void current_time();
   long unix_time();
   void size_of_file(const char* path);
+  std::string environ(const char* path);
 };
 
 void OperatingSystem::pcwd()
@@ -109,6 +111,12 @@ long OperatingSystem::unix_time()
   long t = now;
   return t;
 }
+
+std::string OperatingSystem::environ(const char* path)
+{
+  std::string env_p = std::getenv(path);
+  return env_p;
+}
 int main()
 {
   OperatingSystem os = OperatingSystem ();
@@ -120,5 +128,6 @@ int main()
   os.current_time();
   std::cout<<"unix time= "<<os.unix_time()<<"\n";
   os.size_of_file("os.cc");
+  std::cout<<os.environ("HOME")<<std::endl;
   return 0;
 }
