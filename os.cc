@@ -32,6 +32,7 @@ public:
   std::string environ(const char* path);
   void map_file(path p);
   void mkdir(fs::path p);
+
 };
 
 void OperatingSystem::pcwd()
@@ -139,7 +140,6 @@ int main()
   OperatingSystem os = OperatingSystem ();
   os.pcwd();
   std::cout<<os.getcwd()<<"\n";
-  os.print_list_current_directory();
   os.listdir("/home/pawel1/Pulpit/C++/boost");
   os.map_ls();
   os.current_time();
