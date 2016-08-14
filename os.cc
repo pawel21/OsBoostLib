@@ -32,6 +32,7 @@ public:
   std::string environ(const char* path);
   void map_file(path p);
   void mkdir(fs::path p);
+  void rmdir(fs::path p);
 
 };
 
@@ -135,6 +136,10 @@ void OperatingSystem::mkdir(fs::path p)
   fs::create_directory(p);
 }
 
+void OperatingSystem::rmdir(fs::path p)
+{
+  fs::remove(p);
+}
 int main()
 {
   OperatingSystem os = OperatingSystem ();
@@ -147,6 +152,6 @@ int main()
   os.size_of_file("os.cc");
   std::cout<<os.environ("HOME")<<std::endl;
   os.map_file("hello.txt");
-  os.mkdir("katolog");
+  os.rmdir("katolog");
   return 0;
 }
