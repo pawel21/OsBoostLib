@@ -33,6 +33,7 @@ public:
   void map_file(path p);
   void mkdir(fs::path p);
   void rmdir(fs::path p);
+  void available_space(fs::path p);
 
 };
 
@@ -140,6 +141,20 @@ void OperatingSystem::rmdir(fs::path p)
 {
   fs::remove(p);
 }
+
+void OperatingSystem::available_space(fs::path p)
+{
+    try
+    {
+      fs::space_info s = space(p);
+      std::cout << s.available << '\n';
+    }
+    catch (fs::filesystem_error &e)
+    {
+      std::cerr << e.what() << '\n';
+    }
+}
+
 int main()
 {
   OperatingSystem os = OperatingSystem ();
@@ -152,6 +167,7 @@ int main()
   os.size_of_file("os.cc");
   std::cout<<os.environ("HOME")<<std::endl;
   os.map_file("hello.txt");
-  os.rmdir("katolog");
+  //os.rmdir("katolog");
+  os.available_space("/home/pawel1/Pulpit/C++");
   return 0;
 }
